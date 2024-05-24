@@ -11,7 +11,7 @@
 10. Creating the user model & the message model in the models folder
 11. Creating the endpoint for registration of user
 12. Creating the handleRegister function in the RegisterScreen, npm i axios to make the post request
-13. Fixing the bug: Axios error: Network Error, after a lot of research, got to know that we have to use the IP address of the expo server instead of localhost
+13. Fixing the bug: Axios error: Network Error, after a lot of research, got to know that we have to use the IP address of the expo server instead of localhost during axios post request
 14. Then creating the endpoint for login of user
 15. Creating the handleLogin function in the LoginScreen, npx expo install @react-native-async-storage/async-storage -> To store the token in the AsyncStorage(local storage)
 16. Creating the HomeScreen, navigating to the HomeScreen after successful login
