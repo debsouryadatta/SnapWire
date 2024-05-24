@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
+require("dotenv").config();
+
 
 const app = express();
 const port = 8000;
@@ -16,7 +18,7 @@ const jwt = require("jsonwebtoken");
 
 mongoose
   .connect(
-    "mongodb+srv://Neel:lovecoding@cluster0.qymvclt.mongodb.net/snapwire?retryWrites=true&w=majority"
+    process.env.MONGO_URI
   )
   .then(() => {
     console.log("Connected to MongoDB");
