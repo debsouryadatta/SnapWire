@@ -304,14 +304,15 @@ const ChatMessagesScreen = () => {
           }
 
           if (item.messageType === "image") {
-            const baseUrl =
-              "http://192.168.29.51:8000/files/";
-            const imageUrl = item.imageUrl;
-            const filename = imageUrl.split("/").pop();
-            const source = { uri: baseUrl + filename };
+            // const baseUrl =
+            //   "http://192.168.29.51:8000/files/";
+            let source = item.imageUrl;
+            // const filename = imageUrl.split("/").pop();
+            source = { uri: source };
             console.log("source", source);
             return (
               <Pressable
+              onLongPress={() => handleSelectMessage(item)}
                 key={index}
                 style={[
                   item?.senderId?._id === userId

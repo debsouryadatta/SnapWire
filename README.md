@@ -76,4 +76,8 @@
 5. Apk file link - https://drive.google.com/file/d/1Er9vAX8JNwuFki8SYXhIFy-aW6afu5xz/view?usp=sharing
 6. Expo app open link - https://expo.dev/accounts/debsouryadatta/projects/SnapWire/updates/57aee414-662b-4071-994c-601a25a4e557 or https://expo.dev/preview/update?message=UPDATED!%20From%20Neel&updateRuntimeVersion=1.0.0&createdAt=2024-05-26T06%3A11%3A16.058Z&slug=exp&projectId=5ecb9c0d-6217-4c2b-b9e3-654922adeb67&group=57aee414-662b-4071-994c-601a25a4e557
 
-7. I forgot to deploy the backend, deploying the backend to Vercel
+7. I forgot to deploy the backend, deploying the backend to Vercel, updating the local links to the vercel links in the frontend, rebuilding the frontend following the above steps
+
+### Changing Image uploading approach
+1. From now - The images which will be stored in files folder using multer, will get uploaded to cloudinary, getting back the imageUrl which will be stored in our DB
+2. npm i cloudinary, implemented cloudinary using their docs and older projects

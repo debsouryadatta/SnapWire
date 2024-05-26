@@ -225,13 +225,27 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix + "-" + file.originalname);
   },
 });
-
 const upload = multer({ storage: storage });
+
+// Configure cloudinary for image uploads
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 //endpoint to post Messages and store it in the backend
 app.post("/messages", upload.single("imageFile"), async (req, res) => {
   try {
     const { senderId, recepientId, messageType, messageText } = req.body;
+    let photoUrl = null;
+
+    if(messageType === "image"){
+      photoUrl = await cloudinary.uploader.upload(`${req.file.path}`, { upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET, folder: 'snapwire'})
+  
+      console.log("photoUrl", photoUrl.secure_url);
+    }
 
     const newMessage = new Message({
       senderId,
@@ -239,7 +253,7 @@ app.post("/messages", upload.single("imageFile"), async (req, res) => {
       messageType,
       message: messageText,
       timestamp: new Date(),
-      imageUrl: messageType === "image" ? req.file.path : null,
+      imageUrl: messageType === "image" ? photoUrl.secure_url : null,
     });
 
     console.log("newMessage", newMessage);
@@ -250,6 +264,7 @@ app.post("/messages", upload.single("imageFile"), async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 //endpoint to get the userDetails to design the chat Room header
 app.get("/user/:userId", async (req, res) => {
