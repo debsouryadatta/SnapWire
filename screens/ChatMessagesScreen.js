@@ -23,15 +23,15 @@ import { Entypo } from "@expo/vector-icons";
 import EmojiSelector from "react-native-emoji-selector";
 import { UserType } from "../UserContext";
 import { useNavigation, useRoute } from "@react-navigation/native";
-// import * as ImagePicker from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker";
 
 const ChatMessagesScreen = () => {
   const [showEmojiSelector, setShowEmojiSelector] = useState(false);
-//   const [selectedMessages, setSelectedMessages] = useState([]);
-//   const [messages, setMessages] = useState([]);
+  const [selectedMessages, setSelectedMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [recepientData, setRecepientData] = useState();
   const navigation = useNavigation();
-//   const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImage, setSelectedImage] = useState("");
   const route = useRoute();
   const { recepientId } = route.params;
   const [message, setMessage] = useState("");
@@ -39,50 +39,50 @@ const ChatMessagesScreen = () => {
 
   const scrollViewRef = useRef(null);
 
-//   useEffect(() => {
-//     scrollToBottom();
-//   }, []);
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
-//   const scrollToBottom = () => {
-//     if (scrollViewRef.current) {
-//       scrollViewRef.current.scrollToEnd({ animated: false });
-//     }
-//   };
+  const scrollToBottom = () => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd({ animated: false });
+    }
+  };
 
-//   const handleContentSizeChange = () => {
-//     scrollToBottom();
-//   };
+  const handleContentSizeChange = () => {
+    scrollToBottom();
+  };
 
   const handleEmojiPress = () => {
     setShowEmojiSelector(!showEmojiSelector);
   };
 
-//   const fetchMessages = async () => {
-//     try {
-//       const response = await fetch(
-//         `http://localhost:8000/messages/${userId}/${recepientId}`
-//       );
-//       const data = await response.json();
+  const fetchMessages = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.29.51:8000/messages/${userId}/${recepientId}`
+      );
+      const data = await response.json();
 
-//       if (response.ok) {
-//         setMessages(data);
-//       } else {
-//         console.log("error showing messags", response.status.message);
-//       }
-//     } catch (error) {
-//       console.log("error fetching messages", error);
-//     }
-//   };
+      if (response.ok) {
+        setMessages(data);
+      } else {
+        console.log("error showing messags", response.status.message);
+      }
+    } catch (error) {
+      console.log("error fetching messages", error);
+    }
+  };
 
-//   useEffect(() => {
-//     fetchMessages();
-//   }, []);
+  useEffect(() => {
+    fetchMessages();
+  }, []);
 
   useEffect(() => {
     const fetchRecepientData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.29.50:8000/user/${recepientId}`
+          `http://192.168.29.51:8000/user/${recepientId}`
         );
 
         const data = await response.json();
@@ -94,6 +94,7 @@ const ChatMessagesScreen = () => {
 
     fetchRecepientData();
   }, []);
+
   const handleSend = async (messageType, imageUri) => {
     try {
       const formData = new FormData();
@@ -107,13 +108,14 @@ const ChatMessagesScreen = () => {
           uri: imageUri,
           name: "image.jpg",
           type: "image/jpeg",
+          imageUri,
         });
       } else {
         formData.append("messageType", "text");
         formData.append("messageText", message);
       }
 
-      const response = await fetch("http://192.168.29.50:8000/messages", {
+      const response = await fetch("http://192.168.29.51:8000/messages", {
         method: "POST",
         body: formData,
       });
@@ -122,14 +124,14 @@ const ChatMessagesScreen = () => {
         setMessage("");
         setSelectedImage("");
 
-        // fetchMessages();
+        fetchMessages();
       }
     } catch (error) {
       console.log("error in sending the message", error);
     }
   };
 
-//   console.log("messages", selectedMessages);
+  console.log("messages", selectedMessages, selectedMessages.length);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "",
@@ -142,13 +144,13 @@ const ChatMessagesScreen = () => {
             color="black"
           />
 
-          {/* {selectedMessages.length > 0 ? (
+          {selectedMessages.length > 0 ? (
             <View>
               <Text style={{ fontSize: 16, fontWeight: "500" }}>
                 {selectedMessages.length}
               </Text>
             </View>
-          ) : ( */}
+          ) : (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 style={{
@@ -164,94 +166,98 @@ const ChatMessagesScreen = () => {
                 {recepientData?.name}
               </Text>
             </View>
-          {/* )} */}
+           )} 
         </View>
       ),
-      // headerRight: () =>
-      //   selectedMessages.length > 0 ? (
-      //     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-      //       <Ionicons name="md-arrow-redo-sharp" size={24} color="black" />
-      //       <Ionicons name="md-arrow-undo" size={24} color="black" />
-      //       <FontAwesome name="star" size={24} color="black" />
-      //       <MaterialIcons
-      //         onPress={() => deleteMessages(selectedMessages)}
-      //         name="delete"
-      //         size={24}
-      //         color="black"
-      //       />
-      //     </View>
-      //   ) : null,
+      headerRight: () =>
+        selectedMessages.length > 0 ? (
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <Ionicons name="arrow-redo" size={24} color="black" />
+            <Ionicons name="arrow-undo" size={24} color="black" />
+            <FontAwesome name="star" size={24} color="black" />
+            <MaterialIcons
+              onPress={() => deleteMessages(selectedMessages)}
+              name="delete"
+              size={24}
+              color="black"
+            />
+          </View>
+        ) : null,
     });
-  }, [recepientData]);
+  }, [recepientData, selectedMessages]);
 
-//   const deleteMessages = async (messageIds) => {
-//     try {
-//       const response = await fetch("http://localhost:8000/deleteMessages", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ messages: messageIds }),
-//       });
+  const deleteMessages = async (messageIds) => {
+    try {
+      const response = await fetch("http://192.168.29.51:8000/deleteMessages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ messages: messageIds }),
+      });
 
-//       if (response.ok) {
-//         setSelectedMessages((prevSelectedMessages) =>
-//           prevSelectedMessages.filter((id) => !messageIds.includes(id))
-//         );
+      if (response.ok) {
+        setSelectedMessages((prevSelectedMessages) =>
+          prevSelectedMessages.filter((id) => !messageIds.includes(id))
+        );
 
-//         fetchMessages();
-//       } else {
-//         console.log("error deleting messages", response.status);
-//       }
-//     } catch (error) {
-//       console.log("error deleting messages", error);
-//     }
-//   };
-//   const formatTime = (time) => {
-//     const options = { hour: "numeric", minute: "numeric" };
-//     return new Date(time).toLocaleString("en-US", options);
-//   };
-//   const pickImage = async () => {
-//     let result = await ImagePicker.launchImageLibraryAsync({
-//       mediaTypes: ImagePicker.MediaTypeOptions.All,
-//       allowsEditing: true,
-//       aspect: [4, 3],
-//       quality: 1,
-//     });
+        fetchMessages();
+      } else {
+        console.log("error deleting messages", response.status);
+      }
+    } catch (error) {
+      console.log("error deleting messages", error);
+    }
+  };
+  
+  const formatTime = (time) => {
+    const options = { hour: "numeric", minute: "numeric" };
+    return new Date(time).toLocaleString("en-US", options);
+  };
 
-//     console.log(result);
-//     if (!result.canceled) {
-//       handleSend("image", result.uri);
-//     }
-//   };
-//   const handleSelectMessage = (message) => {
-//     //check if the message is already selected
-//     const isSelected = selectedMessages.includes(message._id);
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-//     if (isSelected) {
-//       setSelectedMessages((previousMessages) =>
-//         previousMessages.filter((id) => id !== message._id)
-//       );
-//     } else {
-//       setSelectedMessages((previousMessages) => [
-//         ...previousMessages,
-//         message._id,
-//       ]);
-//     }
-//   };
+    console.log("result: ", result);
+    if (!result.canceled) {
+      await handleSend("image", result.assets[0].uri);
+    }
+  };
+
+  const handleSelectMessage = (message) => {
+    //check if the message is already selected
+    const isSelected = selectedMessages.includes(message._id);
+
+    if (isSelected) {
+      setSelectedMessages((previousMessages) =>
+        previousMessages.filter((id) => id !== message._id)
+      );
+    } else {
+      setSelectedMessages((previousMessages) => [
+        ...previousMessages,
+        message._id,
+      ]);
+    }
+  };
+
   return (
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: "#F0F0F0" }}>
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={{ flexGrow: 1 }}
-        // onContentSizeChange={handleContentSizeChange}
+        onContentSizeChange={handleContentSizeChange}
       >
-        {/* {messages.map((item, index) => {
+        {messages.map((item, index) => {
           if (item.messageType === "text") {
             const isSelected = selectedMessages.includes(item._id);
             return (
               <Pressable
-                // onLongPress={() => handleSelectMessage(item)}
+                onLongPress={() => handleSelectMessage(item)}
                 key={index}
                 style={[
                   item?.senderId?._id === userId
@@ -299,10 +305,11 @@ const ChatMessagesScreen = () => {
 
           if (item.messageType === "image") {
             const baseUrl =
-              "/Users/sujananand/Build/messenger-project/api/files/";
+              "http://192.168.29.51:8000/files/";
             const imageUrl = item.imageUrl;
             const filename = imageUrl.split("/").pop();
             const source = { uri: baseUrl + filename };
+            console.log("source", source);
             return (
               <Pressable
                 key={index}
@@ -348,7 +355,7 @@ const ChatMessagesScreen = () => {
               </Pressable>
             );
           }
-        })} */}
+        })}
       </ScrollView>
 
       <View
@@ -392,8 +399,7 @@ const ChatMessagesScreen = () => {
             marginHorizontal: 8,
           }}
         >
-          {/* <Entypo onPress={pickImage} name="camera" size={24} color="gray" /> */}
-          <Entypo name="camera" size={24} color="gray" />
+          <Entypo onPress={pickImage} name="camera" size={24} color="gray" />
 
           <Feather name="mic" size={24} color="gray" />
         </View>

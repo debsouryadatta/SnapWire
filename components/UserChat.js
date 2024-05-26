@@ -7,43 +7,43 @@ const UserChat = ({ item }) => {
   const { userId, setUserId } = useContext(UserType);
   const [messages, setMessages] = useState([]);
   const navigation = useNavigation();
-//   const fetchMessages = async () => {
-//     try {
-//       const response = await fetch(
-//         `http://localhost:8000/messages/${userId}/${item._id}`
-//       );
-//       const data = await response.json();
+  const fetchMessages = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.29.51:8000/messages/${userId}/${item._id}`
+      );
+      const data = await response.json();
 
-//       if (response.ok) {
-//         setMessages(data);
-//       } else {
-//         console.log("error showing messags", response.status.message);
-//       }
-//     } catch (error) {
-//       console.log("error fetching messages", error);
-//     }
-//   };
+      if (response.ok) {
+        setMessages(data);
+      } else {
+        console.log("error showing messags", response.status.message);
+      }
+    } catch (error) {
+      console.log("error fetching messages", error);
+    }
+  };
 
-//   useEffect(() => {
-//     fetchMessages();
-//   }, []);
-//   console.log(messages);
+  useEffect(() => {
+    fetchMessages();
+  }, []);
+  console.log(messages);
 
-//   const getLastMessage = () => {
-//     const userMessages = messages.filter(
-//       (message) => message.messageType === "text"
-//     );
+  const getLastMessage = () => {
+    const userMessages = messages.filter(
+      (message) => message.messageType === "text"
+    );
 
-//     const n = userMessages.length;
+    const n = userMessages.length;
 
-//     return userMessages[n - 1];
-//   };
-//   const lastMessage = getLastMessage();
-//   console.log(lastMessage);
-//   const formatTime = (time) => {
-//     const options = { hour: "numeric", minute: "numeric" };
-//     return new Date(time).toLocaleString("en-US", options);
-//   };
+    return userMessages[n - 1];
+  };
+  const lastMessage = getLastMessage();
+  console.log(lastMessage);
+  const formatTime = (time) => {
+    const options = { hour: "numeric", minute: "numeric" };
+    return new Date(time).toLocaleString("en-US", options);
+  };
   return (
     <Pressable
       onPress={() =>
@@ -70,18 +70,16 @@ const UserChat = ({ item }) => {
 
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: 15, fontWeight: "500" }}>{item?.name}</Text>
-        {/* {lastMessage && ( */}
+        {lastMessage && (
           <Text style={{ marginTop: 3, color: "gray", fontWeight: "500" }}>
-            {/* {lastMessage?.message} */}
-            WOW
+            {lastMessage?.message}
           </Text>
-        {/* )} */}
+         )} 
       </View>
 
       <View>
         <Text style={{ fontSize: 11, fontWeight: "400", color: "#585858" }}>
-          {/* {lastMessage && formatTime(lastMessage?.timeStamp)} */}
-          03:00 pm
+          {lastMessage && formatTime(lastMessage?.timeStamp)}
         </Text>
       </View>
     </Pressable>

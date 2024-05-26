@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
+const path = require("path");
 require("dotenv").config();
 
 
@@ -14,6 +15,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
+// Sharing static files - Images
+app.use('/files', express.static(path.join(__dirname, 'files')));
 const jwt = require("jsonwebtoken");
 
 mongoose
@@ -34,8 +37,11 @@ app.listen(port, () => {
 const User = require("./models/user");
 const Message = require("./models/message");
 
-//endpoint for registration of the user
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
+//endpoint for registration of the user
 app.post("/register", (req, res) => {
   console.log("hello");
   const { name, email, password, image } = req.body;
@@ -211,7 +217,7 @@ const multer = require("multer");
 // Configure multer for handling file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "files/"); // Specify the desired destination folder
+    cb(null, "./files"); // Specify the desired destination folder
   },
   filename: function (req, file, cb) {
     // Generate a unique filename for the uploaded file
@@ -236,6 +242,7 @@ app.post("/messages", upload.single("imageFile"), async (req, res) => {
       imageUrl: messageType === "image" ? req.file.path : null,
     });
 
+    console.log("newMessage", newMessage);
     await newMessage.save();
     res.status(200).json({ message: "Message sent Successfully" });
   } catch (error) {
@@ -277,3 +284,56 @@ app.get("/messages/:senderId/:recepientId", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+//endpoint to delete the messages!
+app.post("/deleteMessages", async (req, res) => {
+  try {
+    const { messages } = req.body;
+
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({ message: "invalid req body!" });
+    }
+
+    await Message.deleteMany({ _id: { $in: messages } });
+
+    res.json({ message: "Message deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server" });
+  }
+});
+
+// endpoint to get the sent friend requests of a user
+app.get("/friend-requests/sent/:userId",async(req,res) => {
+  try{
+    const {userId} = req.params;
+    const user = await User.findById(userId).populate("sentFriendRequests","name email image").lean();
+
+    const sentFriendRequests = user.sentFriendRequests;
+
+    res.json(sentFriendRequests);
+  } catch(error){
+    console.log("error",error);
+    res.status(500).json({ error: "Internal Server" });
+  }
+})
+
+// endpoint to get the ids of friends of a user
+app.get("/friends/:userId",(req,res) => {
+  try{
+    const {userId} = req.params;
+
+    User.findById(userId).populate("friends").then((user) => {
+      if(!user){
+        return res.status(404).json({message: "User not found"})
+      }
+
+      const friendIds = user.friends.map((friend) => friend._id);
+
+      res.status(200).json(friendIds);
+    })
+  } catch(error){
+    console.log("error",error);
+    res.status(500).json({message:"internal server error"})
+  }
+})

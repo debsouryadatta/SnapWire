@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
 import { UserType } from "../UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
@@ -16,6 +17,12 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const { userId, setUserId } = useContext(UserType);
   const [users, setUsers] = useState([]);
+  
+
+  const logOut = async ()=> {
+    await AsyncStorage.removeItem("authToken");
+    navigation.replace("Login");
+  }
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -24,7 +31,7 @@ const HomeScreen = () => {
         <Text style={{ fontSize: 16, fontWeight: "bold" }}>Swift Chat</Text>
       ),
       headerRight: () => (
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
           <Ionicons
             onPress={() => navigation.navigate("Chats")}
             name="chatbox-ellipses-outline"
@@ -37,6 +44,11 @@ const HomeScreen = () => {
             size={24}
             color="black"
           />
+          <AntDesign 
+            onPress={logOut}
+            name="logout" 
+            size={24} 
+            color="black" />
         </View>
       ),
     });
@@ -50,7 +62,7 @@ const HomeScreen = () => {
       setUserId(userId);
 
       axios
-        .get(`http://192.168.29.50:8000/users/${userId}`)
+        .get(`http://192.168.29.51:8000/users/${userId}`)
         .then((response) => {
           console.log(response.data);
           setUsers(response.data);

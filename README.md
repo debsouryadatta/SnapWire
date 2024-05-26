@@ -47,7 +47,33 @@
 46. Creating the endpoint to fetch the messages between two users in the chatRoom
 47. Creating the handleSend function in the ChatMessagesScreen to send the message/images to the server
 
-48. Using the useLayoutEffect hook to design the header of the ChatMessagesScreen to show the recipient user's image and name(using useEffect hook for fetching the recipient details using the endpoint we just created) -> There is a catch, useLayoutEffect hook runs before the useEffect hook, so we have to give a recipientData in the dependency array of the useLayoutEffect hook to make it run after the useEffect hook
-49. f
+48. Using the useLayoutEffect hook to design the header of the ChatMessagesScreen to show the recipient user's image and name(using useEffect hook for fetching the recipient details using the endpoint we just created) -> There is a catch, useLayoutEffect hook runs before the useEffect hook, so we have to give a recipientData in the dependency array of the useLayoutEffect hook to make it run after the recipientData is filled in the useEffect hook
+49. Creating the fetchMessages function and calling it inside the useEffect hook to fetch the messages between the two users
+50. Showing all the messages on the screen, if the message.sender == currentUserId, then show the message on the right side, else show it on the left side, also using the formatTime function to format the time of the message
+51. npx expo install expo-image-picker, adding the code in the docs to the app.json
+52. Creating the pickImage function to pick the image from the gallery, calling the handleSend function at the end of pickImage func to send the image to the server, calling the fetchMessages function at the end of the handleSend function
+53. Error: There was an error in sending the image to the server, the fix was - The Image picker element in expo had a little change which caused the error, fixed it by changing the code in the pickImage function
 
-<!-- Invalid token specified: invalid base64, error using jwt-decode -->
+54. The way to show the images in the ChatMessagesScreen was not working, so I shared all the static files in the api folder using express.static middleware and then fetched those images in the frontend through the api
+55. Creating the endpoint to delete the messages!
+56. Creating the handleSelectMessage func on long press on the messages, also doing the ui changes for selected messages, also adding the icons on the screenheader when messages are selected.
+57. Creating the deleteMessages func to delete the selected messages, calling the deleteMessages func on the delete icon press
+58. Creating the lastmessage functionality by using fetchMessages func, showing the last message on the UserChat component of the ChatsScreen
+59. There was an error in the vector icons pf undo & redo, fixed it by updating the new code for vector icons
+60. Adding the scrollToBottom feature in the ChatMessagesScreen, adding it to useEffect and also in the handleContentSizeChange func, handleContentSizeChange func is called when the content of ScrollView changes
+61. Creating the endpoint to get the sent friend requests of a user
+62. Creating the endpoint to get the ids of friends of a user
+63. Creating the fetchFriendRequests func & the fetchUserFriends func in the User.js(HomeScreen) 
+64. Showing all the users according to whether the user is a friend(Friends) or friend request is sent to that user(Request sent) or the user is not a friend(Add friend Option)
+65. Thats all from the tutorial, now comes the Deployment part
+66. Self -> Creating the logOut func in the HomeScreen, just removing the token from the async storage and navigation.replace("Login")
+
+### Deployment
+1. Building the apk file, following expo docs - https://docs.expo.dev/build/setup/ (Create your first build) -> It created the aab file but I wanted the apk file
+2. To get the apk file -> 
+3. Changing the eas.json according to the expo docs(link - https://docs.expo.dev/build-reference/apk/), then "eas build -p android --profile preview" to build the apk file
+4. eas update (same as expo publish) -> It gives us a link through which we can run our application in the expo app, for running this you first need to follow the baove steps of building the apk file
+5. Apk file link - https://drive.google.com/file/d/1Er9vAX8JNwuFki8SYXhIFy-aW6afu5xz/view?usp=sharing
+6. Expo app open link - https://expo.dev/accounts/debsouryadatta/projects/SnapWire/updates/57aee414-662b-4071-994c-601a25a4e557 or https://expo.dev/preview/update?message=UPDATED!%20From%20Neel&updateRuntimeVersion=1.0.0&createdAt=2024-05-26T06%3A11%3A16.058Z&slug=exp&projectId=5ecb9c0d-6217-4c2b-b9e3-654922adeb67&group=57aee414-662b-4071-994c-601a25a4e557
+
+7. I forgot to deploy the backend, deploying the backend to Vercel
