@@ -9,7 +9,7 @@ const FriendRequest = ({ item, friendRequests, setFriendRequests }) => {
   const acceptRequest = async (friendRequestId) => {
     try {
       const response = await fetch(
-        "http://192.168.29.51:8000/friend-request/accept",
+        "https://snapwire-backend.vercel.app/friend-request/accept",
         {
           method: "POST",
           headers: {

@@ -62,7 +62,7 @@ const HomeScreen = () => {
       setUserId(userId);
 
       axios
-        .get(`http://192.168.29.51:8000/users/${userId}`)
+        .get(`https://snapwire-backend.vercel.app/users/${userId}`)
         .then((response) => {
           console.log(response.data);
           setUsers(response.data);

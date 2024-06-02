@@ -42,7 +42,7 @@ export default function LoginScreen() {
     };
 
     axios
-      .post("http://192.168.29.51:8000/login", user)
+      .post("https://snapwire-backend.vercel.app/login", user)
       .then((response) => {
         console.log(response.data.token);
         const token = response.data.token;

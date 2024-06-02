@@ -60,7 +60,7 @@ const ChatMessagesScreen = () => {
   const fetchMessages = async () => {
     try {
       const response = await fetch(
-        `http://192.168.29.51:8000/messages/${userId}/${recepientId}`
+        `https://snapwire-backend.vercel.app/messages/${userId}/${recepientId}`
       );
       const data = await response.json();
 
@@ -82,7 +82,7 @@ const ChatMessagesScreen = () => {
     const fetchRecepientData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.29.51:8000/user/${recepientId}`
+          `https://snapwire-backend.vercel.app/user/${recepientId}`
         );
 
         const data = await response.json();
@@ -115,7 +115,7 @@ const ChatMessagesScreen = () => {
         formData.append("messageText", message);
       }
 
-      const response = await fetch("http://192.168.29.51:8000/messages", {
+      const response = await fetch("https://snapwire-backend.vercel.app/messages", {
         method: "POST",
         body: formData,
       });
@@ -188,7 +188,7 @@ const ChatMessagesScreen = () => {
 
   const deleteMessages = async (messageIds) => {
     try {
-      const response = await fetch("http://192.168.29.51:8000/deleteMessages", {
+      const response = await fetch("https://snapwire-backend.vercel.app/deleteMessages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -305,7 +305,7 @@ const ChatMessagesScreen = () => {
 
           if (item.messageType === "image") {
             // const baseUrl =
-            //   "http://192.168.29.51:8000/files/";
+            //   "https://snapwire-backend.vercel.app/files/";
             let source = item.imageUrl;
             // const filename = imageUrl.split("/").pop();
             source = { uri: source };

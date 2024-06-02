@@ -10,7 +10,7 @@ const UserChat = ({ item }) => {
   const fetchMessages = async () => {
     try {
       const response = await fetch(
-        `http://192.168.29.51:8000/messages/${userId}/${item._id}`
+        `https://snapwire-backend.vercel.app/messages/${userId}/${item._id}`
       );
       const data = await response.json();
 

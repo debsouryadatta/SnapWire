@@ -28,7 +28,7 @@ export default function RegisterScreen() {
 
     // send a POST  request to the backend API to register the user
     axios
-      .post("http://192.168.29.51:8000/register", user)
+      .post("https://snapwire-backend.vercel.app/register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(

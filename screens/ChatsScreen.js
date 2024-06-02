@@ -13,7 +13,7 @@ const ChatsScreen = () => {
     const acceptedFriendsList = async () => {
       try {
         const response = await fetch(
-          `http://192.168.29.51:8000/accepted-friends/${userId}`
+          `https://snapwire-backend.vercel.app/accepted-friends/${userId}`
         );
         const data = await response.json();
 
