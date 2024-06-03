@@ -73,8 +73,8 @@
 2. To get the apk file -> 
 3. Changing the eas.json according to the expo docs(link - https://docs.expo.dev/build-reference/apk/), then "eas build -p android --profile preview" to build the apk file
 4. eas update (same as expo publish) -> It gives us a link through which we can run our application in the expo app, for running this you first need to follow the baove steps of building the apk file
-5. Apk file link - https://drive.google.com/file/d/1Er9vAX8JNwuFki8SYXhIFy-aW6afu5xz/view?usp=sharing
-6. Expo app open link - https://expo.dev/preview/update?message=Image%20upload%20to%20cloudinary%20feature&updateRuntimeVersion=1.0.0&createdAt=2024-05-26T09%3A02%3A26.423Z&slug=exp&projectId=5ecb9c0d-6217-4c2b-b9e3-654922adeb67&group=d68465a8-bfeb-463c-8868-630a6ae747ce
+5. Apk file link - https://drive.google.com/file/d/1FT1tb7-ak-UUsKpM_SBWgdLJif9hzrmp/view?usp=drive_link
+6. Expo app open link - https://expo.dev/preview/update?message=Image%20upload%20to%20cloudinary%20feature&updateRuntimeVersion=1.0.0&createdAt=2024-05-26T09%3A02%3A26.423Z&slug=exp&projectId=5ecb9c0d-6217-4c2b-b9e3-654922adeb67&group=d68465a8-bfeb-463c-8868-630a6ae747ce  (New link updated above)
 
 7. I forgot to deploy the backend, deploying the backend to Vercel, updating the local links to the vercel links in the frontend, rebuilding the frontend following the above steps
 
