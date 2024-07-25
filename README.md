@@ -6,7 +6,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/debsouryadatta/snapwire-react-native">
     <img src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721799609/projects/icon_fpk4hr.png" alt="Logo" width="80" height="80">
   </a>
 
