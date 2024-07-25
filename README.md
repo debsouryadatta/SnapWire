@@ -63,12 +63,14 @@ SnapWire is a feature-rich mobile chat application developed using React Native 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### SnapWire Demo
-<img src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/1_hfectk.jpg" width="200" height="auto">
-<img src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/2_gnkqja.jpg" width="200" height="auto">
-<img src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/3_xvxk4j.jpg" width="200" height="auto">
-<img src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/4_rzpzis.jpg" width="200" height="auto">
-<img src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/5_hgsx3c.jpg" width="200" height="auto">
-<img src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/6_llwyex.jpg" width="200" height="auto">
+<div style="display: flex; flex-wrap: wrap;">
+  <img style="margin: 10px" src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/1_hfectk.jpg" width="200" height="auto">
+  <img style="margin: 10px" src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/2_gnkqja.jpg" width="200" height="auto">
+  <img style="margin: 10px" src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/3_xvxk4j.jpg" width="200" height="auto">
+  <img style="margin: 10px" src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/4_rzpzis.jpg" width="200" height="auto">
+  <img style="margin: 10px" src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/5_hgsx3c.jpg" width="200" height="auto">
+  <img style="margin: 10px" src="https://res.cloudinary.com/diyxwdtjd/image/upload/v1721882863/projects/6_llwyex.jpg" width="200" height="auto">
+</div>
 
 ### Key Features
 - User authentication (registration and login) with JWT token storage
