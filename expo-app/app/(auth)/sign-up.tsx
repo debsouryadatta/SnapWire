@@ -66,7 +66,7 @@ export default function SignUpScreen() {
     Toast.show({
       type: 'info',
       text1: 'Not available yet',
-      text2: 'Please use a different login method',
+      text2: 'Try out with email and password',
       visibilityTime: 3000,
       autoHide: true,
     })

@@ -7,7 +7,7 @@ import { StatusBar } from 'expo-status-bar'
 import { LinearGradient } from 'expo-linear-gradient'
 import Toast from 'react-native-toast-message'
 
-export default function Page() {
+export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn()
   const router = useRouter()
 
@@ -41,7 +41,7 @@ export default function Page() {
     Toast.show({
       type: 'info',
       text1: 'Not available yet',
-      text2: 'Please use a different login method',
+      text2: 'Try out with email and password',
       visibilityTime: 3000,
       autoHide: true,
     })

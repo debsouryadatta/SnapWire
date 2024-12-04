@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-expo'
 
-export default function Welcome() {
+export default function WelcomeScreen() {
   const { signOut } = useAuth()
 
   const [loaded, error] = useFonts({
