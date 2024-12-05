@@ -34,8 +34,8 @@ app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
 
-const User = require("./models/user");
-const Message = require("./models/message");
+const User = require("./src/models/user");
+const Message = require("./src/models/message");
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
